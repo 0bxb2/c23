@@ -50,7 +50,7 @@ elif command -v zypper &> /dev/null; then
   INSTALL_CMD="zypper install -y python3 python3-pip curl"
 elif command -v apk &> /dev/null; then
   INSTALL_CMD="apk add --no-cache python3 py3-pip curl"
-else
+elif command -v apk &> /dev/null; then
   print_message "red" "[!] Could not detect a supported package manager. Aborting."
   exit 1
 fi

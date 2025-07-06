@@ -32,10 +32,31 @@ if [ "$EUID" -ne 0 ]; then
   fi
 fi
 
-
 print_message "blue" "[*] Detecting package manager..."
 INSTALL_CMD=""
 UPDATE_CMD=""
+
+if ! command -v crontab &> /dev/null; then
+  echo -e "\e[33m[!] 'crontab' not found. Attempting to install it...\e[0m"
+  
+  if command -v apt-get &> /dev/null; then
+    apt-get update && apt-get install -y cron
+  elif command -v dnf &> /dev/null; then
+    dnf install -y cronie
+  elif command -v yum &> /dev/null; then
+    yum install -y cronie
+  elif command -v pacman &> /dev/null; then
+    pacman -S --noconfirm cronie
+  elif command -v zypper &> /dev/null; then
+    zypper install -y cron
+  elif command -v apk &> /dev/null; then
+    apk add --no-cache dcron
+  else
+    echo -e "\e[31m[!] Could not install 'cron'. Unsupported package manager.\e[0m"
+    exit 1
+  fi
+fi
+
 
 if command -v apt-get &> /dev/null; then
   UPDATE_CMD="apt-get update"

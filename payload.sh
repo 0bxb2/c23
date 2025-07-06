@@ -38,22 +38,23 @@ INSTALL_CMD=""
 UPDATE_CMD=""
 
 if command -v apt-get &> /dev/null; then
-    UPDATE_CMD="apt-get update"
-    INSTALL_CMD="apt-get install -y python3 python3-pip curl"
+  UPDATE_CMD="apt-get update"
+  INSTALL_CMD="apt-get install -y python3 python3-pip curl"
 elif command -v dnf &> /dev/null; then
-    INSTALL_CMD="dnf install -y python3 python3-pip curl"
+  INSTALL_CMD="dnf install -y python3 python3-pip curl"
 elif command -v yum &> /dev/null; then
-    INSTALL_CMD="yum install -y python3 python3-pip curl"
+  INSTALL_CMD="yum install -y python3 python3-pip curl"
 elif command -v pacman &> /dev/null; then
-    INSTALL_CMD="pacman -S --noconfirm python python-pip curl"
+  INSTALL_CMD="pacman -S --noconfirm python python-pip curl"
 elif command -v zypper &> /dev/null; then
-    INSTALL_CMD="zypper install -y python3 python3-pip curl"
-elif command -v apk &> /dev/null;
-    INSTALL_CMD="apk add --no-cache python3 py3-pip curl"
+  INSTALL_CMD="zypper install -y python3 python3-pip curl"
+elif command -v apk &> /dev/null; then
+  INSTALL_CMD="apk add --no-cache python3 py3-pip curl"
 else
-    print_message "red" "[!] Could not detect a supported package manager. Aborting."
-    exit 1
+  print_message "red" "[!] Could not detect a supported package manager. Aborting."
+  exit 1
 fi
+
 
 print_message "blue" "[*] Installing system dependencies (Python3, Pip, Curl)..."
 if [ -n "$UPDATE_CMD" ]; then
